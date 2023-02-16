@@ -60,12 +60,12 @@ fn set_runtime_kernel_param(tunable_class, parameter, target_value) {
 
 //! sysctl -w <TUNABLE_CLASS>.<PARAMETER>=<TARGET_VALUE> >> /etc/sysctl.conf
 //! sets persistent parameter in sysctl.conf
-fn set_persistent_kernel_param() {
+fn set_persistent_kernel_param(tunable_class, parameter, target_value) {
   if !Uid::effective().is_root() {
         panic!("You must run this executable with root permissions");
     }
    let output = Command::new("/usr/bin/sysctl")
-      .arg(&["-w", tunable_class+"."+parameter+"="+target_value])
+      .arg(&["-w", tunable_class+"."+parameter+"="+target_value, ">>", "/etc/sysctl.conf"])
       .output()
       .expect("Failed to execute command");
    return output;
