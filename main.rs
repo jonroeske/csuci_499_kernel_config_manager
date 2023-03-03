@@ -70,3 +70,29 @@ fn set_persistent_kernel_param(tunable_class, parameter, target_value) {
       .expect("Failed to execute command");
    return output;
 }
+
+//! getent passwd username
+//! checks if username exists
+fn check_account(username){
+   if !Uid::effective().is_root() {
+        panic!("You must run this executable with root permissions");
+    }
+   let output = Command::new("/usr/bin/getent")
+      .arg(&["passwd", username])
+      .output()
+      .expect("Failed to execute command");
+   return output != "";
+}
+
+//! su username -c 'echo' <<< password
+//! checks account password
+fn check_password(username, password){
+   if !Uid::effective().is_root() {
+        panic!("You must run this executable with root permissions");
+    }
+   let output = Command::new("/usr/bin/su")
+      .arg(&[username, "-c", "'echo'", "<<<", password])
+      .output()
+      .expect("Failed to execute command");
+   return output == "";
+}
