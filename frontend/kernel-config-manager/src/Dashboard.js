@@ -1,5 +1,4 @@
 import React from 'react';
-import Bootstrap from 'bootstrap';
 
 export default function Dashboard() {
   return(
@@ -12,12 +11,6 @@ export default function Dashboard() {
     </div>
   </nav>
     
-    <div class="d-flex justify-content-center">  
-      <div class="spinner-border m-5" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-
     <div class="container text-center">
       <div class="row row-cols-3">
         <div class="col">Tunable Class</div>

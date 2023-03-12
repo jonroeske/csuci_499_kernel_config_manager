@@ -1,7 +1,22 @@
-import React from 'react';
-import Bootstrap from 'bootstrap';
+import React, {useEffect, useState} from 'react';
 
 export default function Login() {
+  const [user,setUser] = useState('')
+  const [password,setPassword] = useState('')
+  
+  async function submit(e){
+    e.preventDefault();
+
+    try{
+      await express.post("http://localhost:3001/", {
+        user,password
+      })
+    }
+    catch{
+
+    }
+  }
+
   return (
     <><div style={{ padding: 15, display: 'flex', justifyContent: 'center' }}>
         <h1>Kernel Configuration Manager</h1>
@@ -11,12 +26,12 @@ export default function Login() {
     </div>
     <div class="form-signin w-50 m-auto">
       <div style={{ padding: 20, display: 'flex', justifyContent: 'center'}}>
-        <input id="floatingInput" class="form-control" type="text" placeholder="Username"/>
+        <input id="floatingInput" class="form-control" type="text" onChange={(e)=>{setUser(e.target.value)}} placeholder="Username"/>
         <div style={{ padding: 10, display: 'flex', justifyContent: 'center'}}/>
-        <input id="floatingPassword" class="form-control" type="password" placeholder="Password"/>
+        <input id="floatingPassword" class="form-control" type="password" onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password"/>
       </div>
       <div style={{ padding: 20, display: 'flex', justifyContent: 'center'}}>
-        <button class="btn btn-outline-dark" type="submit">Login</button>
+        <button class="btn btn-outline-dark" type="submit" onClick={submit}>Login</button>
         <button class="btn btn-outline-dark" type="button" disabled>
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
            Logging In...
