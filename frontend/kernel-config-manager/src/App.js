@@ -1,15 +1,17 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Login from './Login.js';
-import Dashboard from './Dashboard.js';
+import DashboardIndex from './DashboardIndex';
+import useToken from './useToken';
 
 function App() {
+  const {token, setToken} = useToken();
+  
   return (
       <Router>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<DashboardIndex setToken={setToken}/>} />
+          <Route path="*" element={<DashboardIndex setToken={setToken}/>} />
         </Routes>
       </Router>
   );

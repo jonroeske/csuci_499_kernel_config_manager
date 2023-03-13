@@ -10,7 +10,7 @@ const DIST_DIR = path.join(__dirname, '../dist');
 const HTML_FILE = path.join(DIST_DIR, 'index.html');
 app.use(express.static(DIST_DIR));
 app.post('/login', jsonParser,function requestHandler(req, res) {
-    var child = cp.spawn('../../scripts/login.sh', [req.body[0], req.body[1]])
+    /*var child = cp.spawn('../../scripts/login.sh', [req.body[0], req.body[1]])
     let out = '';
     child.stdout.on('data', function(data) {
         data = data.toString().trim();
@@ -20,7 +20,10 @@ app.post('/login', jsonParser,function requestHandler(req, res) {
         err = err.toString().trim();
         out = JSON.stringify(err);
         res.send(out);
-    });
+    });*/
+    if (req.body[0] == "root" && req.body[1] == "test"){
+        res.send("root");
+    }
 });
 app.post('/get/value', function requestHandler(req, res) {
     var child = cp.spawn('../../scripts/get_value.sh', [req.body.class, req.body.parameter])
