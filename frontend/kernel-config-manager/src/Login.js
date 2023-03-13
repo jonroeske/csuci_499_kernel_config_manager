@@ -4,17 +4,16 @@ export default function Login() {
   const [user,setUser] = useState('')
   const [password,setPassword] = useState('')
   
-  async function submit(e){
+  function submit(e){
     e.preventDefault();
-
-    try{
-      await express.post("http://localhost:3001/", {
-        user,password
-      })
-    }
-    catch{
-
-    }
+    fetch('http://localhost:3001/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(Object.assign({},[user,password]))
+    })
   }
 
   return (
