@@ -8,6 +8,7 @@ const HTML_FILE = path.join(DIST_DIR, 'index.html');
 app.use(express.static(DIST_DIR));
 app.post('/login', function requestHandler(req, res) {
     var child = cp.spawn('../../scripts/login.sh', [req.body.user, req.body.password])
+    let out = '';
     child.stdout.on('data', function(data) {
         if (data.trim().includes('1')){
             res.send(req.body.user);
@@ -17,7 +18,9 @@ app.post('/login', function requestHandler(req, res) {
         }
     });
     child.stderr.on('err', function(err){
-        res.send(err);
+        err = err.toString().trim();
+        out = JSON.stringify(err);
+        res.send(out);
     });
 });
 app.post('/get/value', function requestHandler(req, res) {
@@ -29,7 +32,7 @@ app.post('/get/value', function requestHandler(req, res) {
         res.send(out);
     });
     child.stderr.on('err', function(err){
-        data = data.toString().trim();
+        err = err.toString().trim();
         out = JSON.stringify(err);
         res.send(out);
     });
@@ -43,7 +46,7 @@ app.post('/get/params', function requestHandler(req, res) {
         res.send(out);
     });
     child.stderr.on('err', function(err){
-        data = data.toString().trim();
+        err = err.toString().trim();
         out = JSON.stringify(err);
         res.send(out);
     });
@@ -57,7 +60,7 @@ app.get('/get/classes', (req, res) => {
         res.send(out);
     });
     child.stderr.on('err', function(err){
-        data = data.toString().trim();
+        err = err.toString().trim();
         out = JSON.stringify(err);
         res.send(out);
     });
@@ -71,7 +74,7 @@ app.post('/set/runtime', function requestHandler(req, res) {
         res.send(out);
     });
     child.stderr.on('err', function(err){
-        data = data.toString().trim();
+        err = err.toString().trim();
         out = JSON.stringify(err);
         res.send(out);
     });
@@ -85,7 +88,7 @@ app.post('/set/persistent', function requestHandler(req, res) {
         res.send(out);
     });
     child.stderr.on('err', function(err){
-        data = data.toString().trim();
+        err = err.toString().trim();
         out = JSON.stringify(err);
         res.send(out);
     });
