@@ -25,50 +25,23 @@ app.post('/login', jsonParser,function requestHandler(req, res) {
         res.send("root");
     }
 });
-app.post('/get/value', function requestHandler(req, res) {
-    var child = cp.spawn('../../scripts/get_value.sh', [req.body.class, req.body.parameter])
-    let out = '';
-    child.stdout.on('data', function(data) {
-        data = data.toString().trim().split('\n');
-        out = JSON.stringify(Object.assign({},data));
-        res.send(out);
-    });
-    child.stderr.on('err', function(err){
-        err = err.toString().trim();
-        out = JSON.stringify(err);
-        res.send(out);
-    });
-});
-app.post('/get/params', function requestHandler(req, res) {
-    var child = cp.spawn('../../scripts/get_params.sh', [req.body.class])
-    let out = '';
-    child.stdout.on('data', function(data) {
-        data = data.toString().trim().split('\n');
-        out = JSON.stringify(Object.assign({},data));
-        res.send(out);
-    });
-    child.stderr.on('err', function(err){
-        err = err.toString().trim();
-        out = JSON.stringify(err);
-        res.send(out);
-    });
-});
-app.get('/get/classes', (req, res) => {
-    var child = cp.spawn('../../scripts/get_tunable_classes.sh')
+app.get('/get/all', (req, res) => {
+    var child = cp.spawn('../../scripts/get_all.sh')
     let out = '';
     child.stdout.on('data', function(data){
-        data = data.toString().trim().split('\n');
-        out = JSON.stringify(Object.assign({},data));
-        res.send(out);
+        data = String(data).trim().split('\n');
+        out = out + JSON.stringify(data);
     });
     child.stderr.on('err', function(err){
         err = err.toString().trim();
         out = JSON.stringify(err);
+    });
+    child.on('close', (code) => {
         res.send(out);
     });
 });
 app.post('/set/runtime', function requestHandler(req, res) {
-    var child = cp.spawn('../../scripts/set_runtime_param.sh', [req.body.class, req.body.parameter, req.body.value])
+    var child = cp.spawn('../../scripts/set_runtime_param.sh', [req.body.parameter, req.body.value])
     let out = '';
     child.stdout.on('data', function(data) {
         data = data.toString().trim().split('\n');
@@ -82,7 +55,7 @@ app.post('/set/runtime', function requestHandler(req, res) {
     });
 });
 app.post('/set/persistent', function requestHandler(req, res) {
-    var child = cp.spawn('../../scripts/set_persistent_param.sh', [req.body.class, req.body.parameter, req.body.value])
+    var child = cp.spawn('../../scripts/set_persistent_param.sh', [req.body.parameter, req.body.value])
     let out = '';
     child.stdout.on('data', function(data) {
         data = data.toString().trim().split('\n');

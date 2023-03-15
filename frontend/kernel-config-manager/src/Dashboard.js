@@ -8,14 +8,14 @@ function Logout(){
 
 export default function Dashboard() {
   const classes = useClasses();
-  let classArr = Object.values(classes);
-  console.log(classArr);
-  const DisplayData = classArr.map(
+  //let classArr = Object.values(classes);
+  const DisplayData = classes.map(
     (info)=>{
       return(
         <>{
           <><tr>
-            <th scope='col'>{info}</th>
+            <th scope='col'>{info[0]}</th>
+            <th scope='col'>{info[2]}</th>
           </tr></>
         }</>
       )
