@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useClasses = () => {
-    const [classes, setClasses] = useState([]);
+    const [classes, setClasses] = useState();
 
     const fetchData = async () => {
         const response = await fetch ('http://localhost:3001/get/all', {

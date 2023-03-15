@@ -27,14 +27,15 @@ app.post('/login', jsonParser,function requestHandler(req, res) {
 });
 app.get('/get/all', (req, res) => {
     var child = cp.spawn('../../scripts/get_all.sh')
-    let out = '';
+    let out = {values : []};
     child.stdout.on('data', function(data){
-        data = String(data).trim().split('\n');
-        out = out + JSON.stringify(data);
+        data = String(data).trim().split(/(?<=^\S+)\s/);
+        out.values.push(JSON.stringify(Object.assign({data})));
     });
     child.stderr.on('err', function(err){
         err = err.toString().trim();
-        out = JSON.stringify(err);
+        console.error(err);
+        res.status(500).send(JSON.stringify(err));
     });
     child.on('close', (code) => {
         res.send(out);

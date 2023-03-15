@@ -8,19 +8,21 @@ function Logout(){
 
 export default function Dashboard() {
   const classes = useClasses();
-  //let classArr = Object.values(classes);
-  const DisplayData = classes.map(
-    (info)=>{
-      return(
-        <>{
-          <><tr>
-            <th scope='col'>{info[0]}</th>
-            <th scope='col'>{info[2]}</th>
-          </tr></>
-        }</>
-      )
+  let formattedArr = [];
+  let tableCells;
+  if (classes != undefined){
+    for(let i = 0;i<Array(classes)[0].values.length;i++){
+      formattedArr.push(JSON.parse(Array(classes)[0].values[i]).data);
     }
-  )
+    tableCells = formattedArr.map((element,index) => {
+      return (
+        <tr key={index}>
+          <td>{element[0]}</td>
+          <td>{element[1]}</td>
+        </tr>
+      );
+    })
+  }
 
   return(
     <><nav className="navbar bg-body-tertiary">
@@ -31,7 +33,12 @@ export default function Dashboard() {
       </form>
     </div>
   </nav>
-    
-  {DisplayData}</>
+  <table>
+    <tbody>
+      <tr>
+        <td>{tableCells}</td>
+      </tr>
+    </tbody>
+  </table></>
   );
 }
