@@ -18,27 +18,27 @@ export default function Dashboard() {
       return (
         <tr key={index}>
           <td>{element[0]}</td>
-          <td>{element[1]}</td>
+          <td><input placeholder={element[1]}/></td>
         </tr>
       );
     })
   }
 
   return(
-    <><nav className="navbar bg-body-tertiary">
-    <div className="container-fluid">
-      <a className="navbar-brand">Kernel Configuration Manager</a>
-      <form className="d-flex" role="search">
-        <button className="btn btn-outline-dark" onClick={Logout}>Logout</button>
-      </form>
+    <><nav>
+    <div>
+      <p>Kernel Configuration Manager</p>
+      <button onClick={Logout}>Logout</button>
     </div>
   </nav>
-  <table>
-    <tbody>
-      <tr>
-        <td>{tableCells}</td>
-      </tr>
-    </tbody>
-  </table></>
+  <div>
+    <table>
+      <tbody>
+        <tr>
+          <td>{tableCells}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div></>
   );
 }
