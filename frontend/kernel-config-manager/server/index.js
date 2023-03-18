@@ -11,6 +11,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 const DIST_DIR = path.join(__dirname, '../dist');
 const HTML_FILE = path.join(DIST_DIR, 'index.html');
 app.use(express.static(DIST_DIR));
+app.use(bodyParser.json());
 app.post('/login', jsonParser,function requestHandler(req, res) {
     const data = fs.readFileSync('../../scripts/login.json','utf8');
     const storedHashes = JSON.parse(data);
@@ -35,31 +36,25 @@ app.get('/get/all', (req, res) => {
     });
 });
 app.post('/set/runtime', function requestHandler(req, res) {
-    var child = cp.spawn('../../scripts/set_runtime_param.sh', [req.body.parameter, req.body.value])
-    let out = '';
-    child.stdout.on('data', function(data) {
-        data = data.toString().trim().split('\n');
-        out = JSON.stringify(Object.assign({},data));
-        res.send(out);
-    });
+    var child = cp.spawn('../../scripts/set_runtime_param.sh', [req.body['parameter'], req.body['value']])
     child.stderr.on('err', function(err){
         err = err.toString().trim();
-        out = JSON.stringify(err);
-        res.send(out);
+        console.error(err);
+        res.status(500).send(JSON.stringify(err));
+    });
+    child.on('close', (code) => {
+        res.status(200).send();
     });
 });
 app.post('/set/persistent', function requestHandler(req, res) {
-    var child = cp.spawn('../../scripts/set_persistent_param.sh', [req.body.parameter, req.body.value])
-    let out = '';
-    child.stdout.on('data', function(data) {
-        data = data.toString().trim().split('\n');
-        out = JSON.stringify(Object.assign({},data));
-        res.send(out);
-    });
+    var child = cp.spawn('../../scripts/set_persistent_param.sh', [req.body['parameter'], req.body['value']])
     child.stderr.on('err', function(err){
         err = err.toString().trim();
-        out = JSON.stringify(err);
-        res.send(out);
+        console.error(err);
+        res.status(500).send(JSON.stringify(err));
+    });
+    child.on('close', (code) => {
+        res.status(200).send();
     });
 });
 app.get('/', (req, res) => {
