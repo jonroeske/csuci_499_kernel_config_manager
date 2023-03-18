@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
+const crypto = require('crypto');
 
 async function login(creds){
   return fetch('http://localhost:3001/login', {
@@ -19,11 +20,11 @@ export default function Login({setToken}) {
   const submitLogin = async e => {
     e.preventDefault();
     if (user != "" && password != ""){
-      /*const token = await login({
+      let hash = crypto.pbkdf2Sync(password, '0', 1000, 64, `sha512`).toString(`hex`);
+      const token = await login({
         user,
-        password
-      });*/
-      const token = user;
+        hash
+      });
       setToken(token);
       window.location.reload(false);
     }

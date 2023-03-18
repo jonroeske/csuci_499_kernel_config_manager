@@ -25,5 +25,13 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'less-loader']
       }
     ]
-  }
+  },
+  resolve: {
+    fallback: { 
+      'crypto': require.resolve('crypto-browserify'),
+      "stream": require.resolve("stream-browserify"),
+      "buffer": require.resolve("buffer")
+   },
+    extensions: ['.jsx', '.js', '.tsx', '.ts'],
+ }
 };

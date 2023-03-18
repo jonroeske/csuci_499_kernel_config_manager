@@ -1,8 +1,10 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 const path = require('path');
+const fs = require('fs');
 var cp = require('child_process');
 const app = express();
+const crypto = require('crypto');
 const port = process.env.PORT || 3001;
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -10,19 +12,10 @@ const DIST_DIR = path.join(__dirname, '../dist');
 const HTML_FILE = path.join(DIST_DIR, 'index.html');
 app.use(express.static(DIST_DIR));
 app.post('/login', jsonParser,function requestHandler(req, res) {
-    /*var child = cp.spawn('../../scripts/login.sh', [req.body[0], req.body[1]])
-    let out = '';
-    child.stdout.on('data', function(data) {
-        data = data.toString().trim();
-        res.send(JSON.stringify(data));
-    });
-    child.stderr.on('err', function(err){
-        err = err.toString().trim();
-        out = JSON.stringify(err);
-        res.send(out);
-    });*/
-    if (req.body[0] == "root" && req.body[1] == "test"){
-        res.send("root");
+    const data = fs.readFileSync('../../scripts/login.json','utf8');
+    const storedHashes = JSON.parse(data);
+    if (req.body['hash'] === storedHashes[req.body['user']]){
+        res.send(JSON.stringify(req.body['user']));
     }
 });
 app.get('/get/all', (req, res) => {
