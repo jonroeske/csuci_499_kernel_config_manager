@@ -22,5 +22,5 @@ By Jon Roeske, Evan Miller and Huey Hsu
 ## Usage
 - Credentials are stored hashed at scripts/login.json
 - User can either register from frontend, or manually add hashed credentials to the json file
-- Upon login, user will see all kernel paramaters and their values load
+- Upon login, user will see all kernel parameters and their respective values load
 - NOTE: Updating a value to runtime means the value will be reverted upon reboot, persistent will keep the updated value even after reboot
