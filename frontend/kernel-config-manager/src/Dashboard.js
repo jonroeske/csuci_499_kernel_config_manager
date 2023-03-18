@@ -6,32 +6,52 @@ function Logout(){
   window.location.reload(false);
 }
 
-/*async function setRuntime(values){
-  e.preventDefault();
+async function setRuntime(values){
   return fetch('http://localhost:3001/set/runtime', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: values
+    body: JSON.stringify(values)
   })
   .then(data => data.json())
 }
 
 async function setPersistent(values){
-  e.preventDefault();
   return fetch('http://localhost:3001/set/persistent', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: values
+    body: JSON.stringify(values)
   })
   .then(data => data.json())
-}*/
+}
 
 export default function Dashboard() {
   const classes = useClasses();
+  const [parameter,setParameter] = useState('')
+  const [value,setValue] = useState('')
+  const submitRuntime = async e => {
+    e.preventDefault();
+    if (parameter != "" && value != ""){
+      const res = await setRuntime({
+        parameter,
+        value
+      });
+      window.location.reload(true);
+    }
+  }
+  const submitPersistent = async e => {
+    e.preventDefault();
+    if (parameter != "" && value != ""){
+      const res = await setPersistent({
+        parameter,
+        value
+      });
+      window.location.reload(true);
+    }
+  }
   let formattedArr = [];
   let tableCells;
   if (classes != undefined){
@@ -42,9 +62,10 @@ export default function Dashboard() {
       return (
         <tr key={index}>
           <td>{element[0]}</td>
-          <td><input placeholder={element[1]}/></td>
-          <td><button /*onClick={setRuntime({"parameter" : element[0], "value" : element[1]})}*/>Set Runtime</button></td>
-          <td><button /*onClick={setPersistent({"parameter" : element[0], "value": element[1]})}*/>Set Persistent</button></td>
+          <td><input placeholder={element[1]} onChange={(e)=>{setValue(e.target.value);
+            setParameter(element[0]);}}/></td>
+          <td><button onClick={submitRuntime}>Set Runtime</button></td>
+          <td><button onClick={submitPersistent}>Set Persistent</button></td>
         </tr>
       );
     })
