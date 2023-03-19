@@ -30,6 +30,7 @@ async function setPersistent(values){
 
 export default function Dashboard() {
   const classes = useClasses();
+  let user = JSON.parse(sessionStorage.getItem('token'));
   const [parameter,setParameter] = useState('')
   const [value,setValue] = useState('')
   const submitRuntime = async e => {
@@ -75,6 +76,7 @@ export default function Dashboard() {
     <><nav>
     <div>
       <p>Kernel Configuration Manager</p>
+      <p>{user}</p>
       <button onClick={Logout}>Logout</button>
     </div>
   </nav>
