@@ -13,6 +13,17 @@ async function login(creds){
   .then(data => data.json())
 }
 
+async function register(creds){
+  return fetch('http://localhost:3001/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(creds)
+  })
+  .then(data => data.json())
+}
+
 export default function Login({setToken}) {
   const [user,setUser] = useState('')
   const [password,setPassword] = useState('')
@@ -22,6 +33,19 @@ export default function Login({setToken}) {
     if (user != "" && password != ""){
       let hash = crypto.pbkdf2Sync(password, '0', 1000, 64, `sha512`).toString(`hex`);
       const token = await login({
+        user,
+        hash
+      });
+      setToken(token);
+      window.location.reload(false);
+    }
+  }
+
+  const submitRegister = async e => {
+    e.preventDefault();
+    if (user != "" && password != ""){
+      let hash = crypto.pbkdf2Sync(password, '0', 1000, 64, `sha512`).toString(`hex`);
+      const token = await register({
         user,
         hash
       });
@@ -42,6 +66,7 @@ export default function Login({setToken}) {
       </div>
       <div style={{ padding: 20, display: 'flex', justifyContent: 'center'}}>
         <button className="btn btn-outline-dark" type="submit" onClick={submitLogin}>Login</button>
+        <button className="btn btn-outline-dark" type="submit" onClick={submitRegister}>Register</button>
       </div>
     </div>
     </>

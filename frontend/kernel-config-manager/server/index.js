@@ -19,6 +19,20 @@ app.post('/login', jsonParser,function requestHandler(req, res) {
         res.send(JSON.stringify(req.body['user']));
     }
 });
+app.post('/register', jsonParser,function requestHandler(req, res) {
+    let data = fs.readFileSync('../../scripts/login.json','utf8');
+    let lines = data.split('\r\n');
+    lines = data.slice(0, -1);
+    lines = lines + ',\n' 
+    lines = lines + '"'+req.body['user']+'": "'+req.body['hash']+'"\n'
+    lines = lines + '}'
+    fs.writeFileSync('../../scripts/login.json', lines);
+    data = fs.readFileSync('../../scripts/login.json','utf8');
+    const storedHashes = JSON.parse(data);
+    if (req.body['hash'] === storedHashes[req.body['user']]){
+        res.send(JSON.stringify(req.body['user']));
+    }
+});
 app.get('/get/all', (req, res) => {
     var child = cp.spawn('../../scripts/get_all.sh')
     let out = {values : []};
