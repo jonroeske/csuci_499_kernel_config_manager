@@ -34,9 +34,6 @@ export default function Login({setToken}) {
     <><div style={{ padding: 15, display: 'flex', justifyContent: 'center' }}>
         <h1>Kernel Configuration Manager</h1>
     </div>
-    <div style={{ padding: 1, display: 'flex', justifyContent: 'center' }}>
-        <b>Login using system credentials</b>
-    </div>
     <div className="form-signin w-50 m-auto">
       <div style={{ padding: 20, display: 'flex', justifyContent: 'center'}}>
         <input id="floatingInput" className="form-control" type="text" onChange={(e)=>{setUser(e.target.value)}} placeholder="Username"/>
