@@ -38,8 +38,8 @@ export default function Dashboard() {
       const res = await setRuntime({
         parameter,
         value
-      });
-      window.location.reload(true);
+      })
+      .then(window.location.reload(true));
     }
   }
   const submitPersistent = async e => {
@@ -48,8 +48,8 @@ export default function Dashboard() {
       const res = await setPersistent({
         parameter,
         value
-      });
-      window.location.reload(true);
+      })
+      .then(window.location.reload(true));
     }
   }
   let formattedArr = [];
