@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
+import { Form, Button } from 'semantic-ui-react';
 const crypto = require('crypto');
 
 async function login(creds){
@@ -60,13 +61,18 @@ export default function Login({setToken}) {
     </div>
     <div className="form-signin w-50 m-auto">
       <div style={{ padding: 20, display: 'flex', justifyContent: 'center'}}>
-        <input id="floatingInput" className="form-control" type="text" onChange={(e)=>{setUser(e.target.value)}} placeholder="Username"/>
-        <div style={{ padding: 10, display: 'flex', justifyContent: 'center'}}/>
-        <input id="floatingPassword" className="form-control" type="password" onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password"/>
+      <Form>
+        <Form.Field>
+            <input id="floatingInput" className="form-control" type="text" onChange={(e)=>{setUser(e.target.value)}} placeholder="Username"/>
+            <div style={{ padding: 10, display: 'flex', justifyContent: 'center'}}/>
+            <input id="floatingPassword" className="form-control" type="password" onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password"/>
+        </Form.Field>
+      </Form>
       </div>
       <div style={{ padding: 20, display: 'flex', justifyContent: 'center'}}>
-        <button className="btn btn-outline-dark" type="submit" onClick={submitLogin}>Login</button>
-        <button className="btn btn-outline-dark" type="submit" onClick={submitRegister}>Register</button>
+        <Button className="btn btn-outline-dark" type="submit" onClick={submitLogin}>Login</Button>
+        <div style={{ padding: 10, display: 'flex', justifyContent: 'center'}}/>
+        <Button className="btn btn-outline-dark" type="submit" onClick={submitRegister}>Register</Button>
       </div>
     </div>
     </>

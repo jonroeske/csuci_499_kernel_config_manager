@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useClasses from './useClasses';
+import { Button, Input, Menu, Table } from 'semantic-ui-react';
 
 function Logout(){
   sessionStorage.clear();
@@ -40,7 +41,7 @@ export default function Dashboard() {
         parameter,
         value
       })
-      .then(window.location.reload(true));
+      .then(setTimeout(function(){window.location.reload(true);}, 3000));
     }
   }
   const submitPersistent = async e => {
@@ -50,7 +51,7 @@ export default function Dashboard() {
         parameter,
         value
       })
-      .then(window.location.reload(true));
+      .then(setTimeout(function(){window.location.reload(true);}, 3000));
     }
   }
   let formattedArr = [];
@@ -61,33 +62,32 @@ export default function Dashboard() {
     }
     tableCells = formattedArr.map((element,index) => {
       return (
-        <tr key={index}>
-          <td>{element[0]}</td>
-          <td><input placeholder={element[1]} onChange={(e)=>{setValue(e.target.value);
-            setParameter(element[0]);}}/></td>
-          <td><button onClick={submitRuntime}>Set Runtime</button></td>
-          <td><button onClick={submitPersistent}>Set Persistent</button></td>
-        </tr>
+        <Table.Row key={index}>
+          <Table.Cell>{element[0]}</Table.Cell>
+          <Table.Cell><Input size='big' icon='terminal' placeholder={element[1]} onChange={(e)=>{setValue(e.target.value);
+            setParameter(element[0]);}}/></Table.Cell>
+          <Table.Cell><Button onClick={submitRuntime}>Set Runtime</Button></Table.Cell>
+          <Table.Cell><Button onClick={submitPersistent}>Set Persistent</Button></Table.Cell>
+        </Table.Row>
       );
     })
   }
 
   return(
-    <><nav>
-    <div>
-      <p>Kernel Configuration Manager</p>
-      <p>{user}</p>
-      <button onClick={Logout}>Logout</button>
-    </div>
-  </nav>
+    <>
+    <Menu>
+      <Menu.Item>Kernel Configuration Manager</Menu.Item>
+      <Menu.Menu position='right'>  
+        <Menu.Item name={user}/>
+        <Menu.Item onClick={Logout} name='Logout'/>
+      </Menu.Menu>
+    </Menu>
   <div>
-    <table>
-      <tbody>
-        <tr>
-          <td>{tableCells}</td>
-        </tr>
-      </tbody>
-    </table>
+    <Table compact>
+      <Table.Body>
+        {tableCells}
+      </Table.Body>
+    </Table>
   </div></>
   );
 }

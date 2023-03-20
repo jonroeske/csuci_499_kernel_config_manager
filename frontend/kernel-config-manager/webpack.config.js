@@ -6,10 +6,10 @@ const htmlPlugin = new HtmlWebPackPlugin({
 });
 module.exports = {
   entry: "./src/index.js",
-  output: { // NEW
+  output: {
     path: path.join(__dirname, 'dist'),
     filename: "[name].js"
-  }, // NEW Ends
+  },
   plugins: [htmlPlugin],
   module: {
     rules: [
@@ -22,7 +22,7 @@ module.exports = {
       },
       {
         test: /\.(sass|less|css)$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
+        use: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
   },
