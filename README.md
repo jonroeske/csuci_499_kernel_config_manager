@@ -21,11 +21,12 @@ By Jon Roeske, Evan Miller and Huey Hsu
 - your_username ALL=(ALL:ALL) NOPASSWD:ALL
 - NOTE: These following few steps are for the apt package manager with Ubuntu/Debian based distros. Use equivalent steps with other distros.
 - sudo apt update
+- sudo apt install curl -y
 - curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
 - sudo apt -y install nodejs (or equivalent for installing Node 14.x.x)
 - sudo apt install git -y
 - git clone https://github.com/jonroeske/csuci_499_kernel_config_manager.git
-- cd csuci_499_kernel_config_manager/frontend/kernel_config_manager
+- cd csuci_499_kernel_config_manager/frontend/kernel-config-manager
 - npm install
 - npm run dev
 - webapp will be accessible at localhost:3001
